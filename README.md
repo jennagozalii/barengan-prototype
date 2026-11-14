@@ -2,7 +2,7 @@
 
 **A planner for friends going to concerts together, from ticket war to the encore.**
 
-👉 **[View the case study](https://jennagozalii.github.io/barengan/)** · **[Try the clickable prototype](https://jennagozalii.github.io/barengan/prototype/)**
+👉 **[View the case study](https://barengan-prototype.vercel.app/)** · **[Try the clickable prototype](https://barengan-prototype.vercel.app/prototype/)**
 
 <img src="assets/linkedin/slide_1.jpg" width="420" alt="Barengan cover">
 
