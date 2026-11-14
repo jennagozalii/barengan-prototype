@@ -1,0 +1,307 @@
+<title>Barengan Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F6F3FB; --panel:#FDFCFF; --ink:#1A1530; --muted:#5E5677; --line:#E2DCEF; --chip:#EEE9F7;
+  --lime:#C6F45B; --on-lime:#14111F; --pink:#C42F72; --pink-soft:#FBE1EE; --ok:#3D6B00; --ok-soft:#E6F7C8;
+  --warn:#9A5B00; --warn-soft:#FFF0D6; --bad:#B42318; --bad-soft:#FDE4E1; --phone:#0D0B16; --screen:#FDFCFF; --hero:#1A1530; --hero-ink:#F3EEFF; --hero-muted:#B9B0D2;
+  color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#120F1F; --panel:#1D1830; --ink:#F3EEFF; --muted:#B3A9CC; --line:#2E2746; --chip:#2A2340;
+  --lime:#C6F45B; --on-lime:#14111F; --pink:#FF6FAE; --pink-soft:#3A1F33; --ok:#C6F45B; --ok-soft:#2A3517;
+  --warn:#FFB547; --warn-soft:#3A2D16; --bad:#FF8A7A; --bad-soft:#3D1F1C; --phone:#050409; --screen:#17132A; --hero:#2A2150; --hero-ink:#F3EEFF; --hero-muted:#C9C0E2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#120F1F; --panel:#1D1830; --ink:#F3EEFF; --muted:#B3A9CC; --line:#2E2746; --chip:#2A2340;
+  --lime:#C6F45B; --on-lime:#14111F; --pink:#FF6FAE; --pink-soft:#3A1F33; --ok:#C6F45B; --ok-soft:#2A3517;
+  --warn:#FFB547; --warn-soft:#3A2D16; --bad:#FF8A7A; --bad-soft:#3D1F1C; --phone:#050409; --screen:#17132A; --hero:#2A2150; --hero-ink:#F3EEFF; --hero-muted:#C9C0E2; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;line-height:1.5}
+.wrap{min-height:100vh;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;justify-content:center;align-items:center}
+.phone{background:var(--phone);border-radius:42px;padding:12px;box-shadow:0 20px 50px rgba(20,10,40,.25);max-width:400px;width:100%}
+.screen{background:var(--screen);border-radius:32px;height:780px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+@media (max-width:480px){.wrap{padding:0}.phone{border-radius:0;padding:0;box-shadow:none;max-width:none}.screen{border-radius:0;height:100vh;max-height:none}}
+.brand{display:flex;align-items:center;gap:8px;font-family:Unbounded,sans-serif;font-weight:800;font-size:16px}
+.logo{width:28px;height:28px;border-radius:9px;background:var(--lime);color:var(--on-lime);display:grid;place-items:center;font-size:14px}
+.top{padding:16px 18px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.who{font-size:12px;color:var(--muted);text-align:right}
+.body{flex:1;overflow-y:auto;padding:14px 16px 20px;display:flex;flex-direction:column;gap:12px}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
+.nav button{background:none;border:0;padding:9px 2px 11px;font:600 11px 'Plus Jakarta Sans',sans-serif;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav button i{font-style:normal;font-size:17px}.nav button.on{color:var(--pink)}
+.seg{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;flex:none}
+.seg button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:6px 12px;font:700 12px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--screen);border-color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.click{cursor:pointer}.click:hover{border-color:var(--pink)}
+.hero{background:var(--hero);color:var(--hero-ink);border:0}
+.hero .m{color:var(--hero-muted);font-size:13px}
+.big{font-family:Unbounded,sans-serif;font-size:19px;font-weight:800;line-height:1.2}
+.count{display:inline-block;background:var(--lime);color:var(--on-lime);font-weight:800;border-radius:10px;padding:4px 10px;font-size:12px;margin-top:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.muted{color:var(--muted);font-size:13px}
+.chip{display:inline-block;background:var(--chip);border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700;white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}.chip.warn{background:var(--warn-soft);color:var(--warn)}.chip.pink{background:var(--pink-soft);color:var(--pink)}.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:12px;font:700 14px 'Plus Jakarta Sans',sans-serif;background:var(--lime);color:var(--on-lime);cursor:pointer;text-align:center}
+.btn.ghost{background:var(--chip);color:var(--ink)}
+.btn.sm{display:inline-block;width:auto;padding:7px 12px;font-size:12px}
+.bar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden}.bar div{height:100%;background:var(--pink)}
+.av{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#14111F}
+.mem{display:flex;gap:10px;align-items:center}
+.sec{font-family:Unbounded,sans-serif;font-weight:800;font-size:15px}
+.msg{white-space:pre-wrap;font-size:13px;background:var(--chip);border-radius:12px;padding:12px}
+.chk{display:flex;gap:10px;align-items:center;font-size:14px}
+.chk input{width:20px;height:20px;accent-color:var(--pink);flex:none}
+label.f{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px}
+input[type=text],input[type=email],input[type=date],input[type=url],select{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--screen);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stars button{background:none;border:0;font-size:26px;cursor:pointer;color:var(--line);padding:0 2px}.stars button.on{color:var(--pink)}
+.toast{font-size:12px;color:var(--ok);font-weight:700;min-height:16px}
+.money{font-variant-numeric:tabular-nums}
+.poster{width:56px;height:56px;flex:none;border-radius:12px;display:grid;place-items:center;font-family:Unbounded,sans-serif;font-weight:800;color:#14111F;font-size:18px}
+.log{border-left:2px solid var(--line);padding-left:12px;margin-left:5px;display:flex;flex-direction:column;gap:10px}
+.log>div{position:relative}.log>div::before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--pink)}
+.qr{width:96px;height:96px;display:grid;grid-template-columns:repeat(12,1fr);background:#fff;padding:6px;border-radius:8px;flex:none}
+.qr i{background:#14111F}.qr b{background:#fff}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tile{aspect-ratio:1;border-radius:10px;display:flex;align-items:flex-end;justify-content:flex-end;padding:5px;font-size:11px;font-weight:800;color:#fff;overflow:hidden}
+.switch{display:flex;justify-content:space-between;align-items:center;font-size:14px;gap:10px}
+.switch input{width:20px;height:20px;accent-color:var(--pink);flex:none}
+.back{background:none;border:0;color:var(--muted);font:700 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;padding:0;text-align:left}
+</style>
+
+<style>
+.wrap{flex-direction:column;gap:14px}
+.credit{font-size:13px;color:var(--muted);text-align:center;max-width:400px}
+.credit b{color:var(--ink)}
+@media (max-width:480px){.credit{display:none}}
+</style>
+<div class="wrap">
+  <div class="phone" aria-label="Barengan app prototype">
+    <div class="screen">
+      <div class="top"><div class="brand"><div class="logo">♫</div>Barengan</div><div class="who" id="who"></div></div>
+      <div class="body" id="body"></div>
+      <nav class="nav" id="nav"></nav>
+    </div>
+  </div>
+  <p class="credit"><b>Barengan</b> · clickable prototype by Jenna Gozali · all artists, people and prices are fictional · <a href="../">← Read the case study</a></p>
+</div>
+
+<script>
+const rp=n=>"Rp"+Math.round(n).toLocaleString("en-US");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CONCERTS=[
+ {id:"neon",name:"Neon Tide – Live in Jakarta",venue:"Stadion Madya",city:"Jakarta",date:"Sat, 13 Mar 2027",color:"#FF6FAE",official:true,price:1750000,cats:"CAT 1 Rp2,250,000 · CAT 2 Rp1,750,000 · CAT 3 Rp1,250,000",war:"Wed 18 Nov 2026, 12:00",
+  log:[["2 Sep 2026","First estimate CAT 2 Rp1,500,000","Average of 3 similar concerts at the same venue"],["4 Nov 2026","Official price CAT 2 Rp1,750,000 (+Rp250,000)","Promoter announcement · the group’s savings targets updated automatically"]]},
+ {id:"lunar",name:"Lunar Bloom Asia Tour",venue:"Jakarta International Stadium",city:"Jakarta",date:"Sat, 24 Apr 2027",color:"#7AD3FF",official:false,price:2100000,est:"Rp1.8M–Rp2.4M",war:"Not announced yet",
+  log:[["28 Oct 2026","Estimate CAT 2 Rp1,800,000–Rp2,400,000 (using Rp2,100,000)","Average price of similar Asia tours at JIS"]]},
+ {id:"kopi",name:"Kopi Senja Fest 2027",venue:"Beach City International Stadium, Ancol",city:"Jakarta",date:"6–7 Feb 2027",color:"#FFB547",official:true,price:850000,cats:"2-day pass Rp850,000",war:"On sale now",log:[["1 Oct 2026","Official price Rp850,000","Promoter announcement"]]},
+ {id:"arcade",name:"Midnight Arcade",venue:"ICE BSD",city:"Tangerang",date:"Fri, 19 Feb 2027",color:"#C6F45B",official:false,price:1200000,est:"Rp1.0M–Rp1.4M",war:"Not announced yet",log:[["5 Nov 2026","Estimate Rp1,000,000–Rp1,400,000","Average of similar concerts at ICE BSD"]]},
+ {id:"sora",name:"Sora & The Waves",venue:"Sabuga",city:"Bandung",date:"Sat, 3 Apr 2027",color:"#B9A2FF",official:true,price:650000,cats:"Festival Rp650,000",war:"Wed 2 Dec 2026, 10:00",log:[["9 Nov 2026","Official price Rp650,000","Promoter announcement"]]},
+ {id:"velvet",name:"Velvet Echo",venue:"GWK Cultural Park",city:"Bali",date:"Sat, 15 May 2027",color:"#FF9A6F",official:false,price:1500000,est:"Rp1.3M–Rp1.7M",war:"Not announced yet",log:[["10 Nov 2026","Estimate Rp1,300,000–Rp1,700,000","Average of similar concerts at GWK"]]}
+];
+const HOTEL=1800000,OTHER=240000;
+const S={view:"jelajah",tab:"ringkasan",city:"All",detail:null,manual:false,asFriend:false,friendStep:0,
+ saved:1450000,ticket:false,putri:"Maybe",checks:[true,true,false,false],hari:[false,false,false,false,false],
+ paid:{Kevin:true,Dimas:true,Sasa:false,Putri:false,Rina:false},partial:{},days:0,sasaState:"normal",rina:false,
+ approve:true,tiara:"pending",invited:{Rina:false,Bagas:false},msg:"",toast:"",rating:0,joined:false,
+ photos:[],linked:"",shareMode:"geng",manualTrips:[]};
+const neon=()=>CONCERTS[0];
+const ikutNames=()=>{let a=["Nadia","Kevin","Sasa","Dimas"];if(S.putri==="In")a.push("Putri");if(S.sasaState==="replaced")a=a.filter(n=>n!=="Sasa");if(S.rina)a.push("Rina");return a};
+const ikut=()=>ikutNames().length;
+const share=()=>HOTEL/ikut();
+const target=()=>neon().price+share()+OTHER;
+const pct=()=>Math.min(100,Math.round(100*S.saved/target()));
+function go(v,t){S.view=v;if(t)S.tab=t;S.toast="";S.msg="";S.asFriend=false;if(v!=="jelajah"){S.detail=null;S.manual=false}render();document.getElementById("body").scrollTop=0}
+function toast(t){S.toast=t;render()}
+const people=()=>{const b=[{n:"Nadia",c:"#FF6FAE",save:null,acc:"Account A · laptop + home Wi-Fi"},{n:"Kevin",c:"#7AD3FF",save:80,acc:"Account B · office laptop"},{n:"Sasa",c:"#FFB547",save:45,acc:S.sasaState==="replaced"?"—":"Account C · 5G phone"},{n:"Dimas",c:"#C6F45B",save:100,acc:"Account D · phone"},{n:"Putri",c:"#B9A2FF",save:S.putri==="In"?20:null,acc:S.putri==="In"?"Backup · phone":"—"}];
+ if(S.rina)b.push({n:"Rina",c:"#FF9A6F",save:30,acc:"Account C · phone (replacing Sasa)"});return b};
+
+/* ---------- EXPLORE ---------- */
+function vJelajah(){
+ if(S.manual)return vManual();
+ if(S.detail)return vDetail(CONCERTS.find(c=>c.id===S.detail));
+ const cities=["All","Jakarta","Tangerang","Bandung","Bali"];
+ const list=CONCERTS.filter(c=>S.city==="All"||c.city===S.city);
+ return `<div class="sec">Concerts in Jakarta & nearby</div>
+ <div class="seg">${cities.map(c=>`<button class="${S.city===c?"on":""}" onclick="S.city='${c}';render()">${c}</button>`).join("")}</div>
+ ${list.map(c=>`<div class="card click mem" onclick="S.detail='${c.id}';S.toast='';render();document.getElementById('body').scrollTop=0">
+  <div class="poster" style="background:${c.color}">${c.name[0]}</div>
+  <div style="flex:1;min-width:0"><b>${c.name}</b><div class="muted">${c.venue}, ${c.city} · ${c.date}</div>
+  <div style="margin-top:4px">${c.official?`<span class="chip ok">Official · ${rp(c.price)}</span>`:`<span class="chip warn">Estimate ${c.est}</span>`}</div></div></div>`).join("")}
+ ${S.manualTrips.map(m=>`<div class="card mem"><div class="poster" style="background:#E2DCEF">${esc((m.name[0]||"?").toUpperCase())}</div><div style="flex:1;min-width:0"><b>${esc(m.name)}</b><div class="muted">${esc(m.city)} · manual trip</div><span class="chip ${m.official?"ok":"warn"}">${m.official?"Official":"Estimate"} · ${rp(m.price)}</span></div></div>`).join("")}
+ <div class="card"><b>Concert not on the list?</b><p class="muted" style="margin:6px 0 10px">Create a manual trip. Start with an estimated price and update it when the official price is out.</p><button class="btn ghost" onclick="S.manual=true;S.toast='';render()">+ Create a manual trip</button></div>
+ <div class="toast">${S.toast}</div>
+ <p class="muted">Example data: made-up artists at real venues. In the MVP, the list is curated from promoter announcements.</p>`}
+
+function vDetail(c){return `<button class="back" onclick="S.detail=null;S.toast='';render()">← All concerts</button>
+ <div class="card hero"><div class="m">${c.city} · ${c.venue}</div><div class="big">${c.name}</div><div class="m">${c.date}</div>
+ <span class="count">Ticket war: ${c.war}</span></div>
+ <div class="card"><div class="row"><b>Ticket price</b><span class="chip ${c.official?"ok":"warn"}">${c.official?"Official":"Estimate"}</span></div>
+ <p style="margin:6px 0 0">${c.official?c.cats:`${c.est}<br><span class="muted">Savings targets use ${rp(c.price)} for now. We’ll update them automatically when the official price is out.</span>`}</p></div>
+ <div class="card"><b>Price history</b><div class="log" style="margin-top:10px">${c.log.map(l=>`<div><b style="font-size:13px">${l[0]}</b><div style="font-size:14px">${l[1]}</div><div class="muted">${l[2]}</div></div>`).join("")}</div></div>
+ ${!c.official?`<button class="btn ghost" onclick="officialOut('${c.id}')">Simulate: official price announced</button>`:""}
+ ${c.id==="neon"?`<button class="btn" onclick="go('trip','ringkasan')">Open your group’s trip</button>`:`<button class="btn" onclick="toast('Trip created! Invite friends from the Trip tab.')">Create a trip for this concert</button>`}
+ <div class="toast">${S.toast}</div>`}
+function officialOut(id){const c=CONCERTS.find(x=>x.id===id);const old=c.price;const np=Math.round(old*1.1/50000)*50000;c.official=true;c.price=np;c.cats="CAT 2 "+rp(np)+" (official)";c.war="Wed 9 Dec 2026, 12:00";
+ c.log.push(["14 Nov 2026",`Official price CAT 2 ${rp(np)} (+${rp(np-old)} vs estimate)`,"Promoter announcement · every group’s savings targets updated"]);toast("Official price is in. Everyone’s savings target was updated and logged in the history.")}
+
+function vManual(){return `<button class="back" onclick="S.manual=false;render()">← All concerts</button>
+ <div class="sec">Manual trip</div>
+ <div><label class="f" for="mName">Concert name</label><input type="text" id="mName" placeholder="e.g. Campus band night"></div>
+ <div class="grid2"><div><label class="f" for="mCity">City</label><input type="text" id="mCity" placeholder="Jakarta"></div><div><label class="f" for="mDate">Date</label><input type="date" id="mDate"></div></div>
+ <div class="grid2"><div><label class="f" for="mPrice">Ticket price (Rp)</label><input type="text" id="mPrice" inputmode="numeric" placeholder="750000"></div>
+ <div><label class="f" for="mStat">Price status</label><select id="mStat"><option value="0">Estimate</option><option value="1">Official</option></select></div></div>
+ <p class="muted">If it’s an estimate, update it later. Every change is logged in the price history and the group’s targets follow.</p>
+ <button class="btn" onclick="saveManual()">Create trip</button><div class="toast" id="mErr" style="color:var(--bad)"></div>`}
+function saveManual(){const n=document.getElementById("mName").value.trim(),p=parseInt(document.getElementById("mPrice").value.replace(/\D/g,""),10);
+ if(!n||!p){document.getElementById("mErr").textContent="Add the concert name and price first.";return}
+ S.manualTrips.push({name:n,city:document.getElementById("mCity").value||"—",price:p,official:document.getElementById("mStat").value==="1"});S.manual=false;toast("Manual trip created. Next: invite your friends.")}
+
+/* ---------- TRIP ---------- */
+function vTrip(){if(S.asFriend)return vFriend();const tabs=[["ringkasan","Overview"],["undang","Invite"],["geng","Squad"],["war","War"],["harih","Show day"]];
+ return `<div class="seg">${tabs.map(([k,l])=>`<button class="${S.tab===k?"on":""}" onclick="S.tab='${k}';S.msg='';S.toast='';render()">${l}</button>`).join("")}</div>`+({ringkasan:tRingkasan,undang:tUndang,geng:tGeng,war:tWar,harih:tHari})[S.tab]()}
+function tRingkasan(){const c=neon();return `
+ <div class="card hero"><div class="m">Your squad’s trip</div><div class="big">${c.name}</div><div class="m">${c.date} · ${c.venue} · CAT 2 ${rp(c.price)}</div>
+ <span class="count">${S.ticket?"Tickets secured ✓":"Ticket war in 4 days · "+c.war}</span></div>
+ <div class="card"><div class="row"><b>Squad (${ikut()} in)</b><span class="chip ${S.putri==="In"?"ok":"warn"}">${S.putri==="In"?"Everyone confirmed":"1 still maybe"}</span></div>
+ <div style="display:flex;gap:6px;margin-top:10px">${people().map(p=>`<div class="av" style="background:${p.c}">${p.n[0]}</div>`).join("")}</div></div>
+ <div class="card"><div class="row"><b>Your savings</b><span class="muted">${pct()}% of ${rp(target())}</span></div><div class="bar" style="margin-top:10px"><div style="width:${pct()}%"></div></div></div>
+ <div class="card"><b>Trip progress</b><div class="muted" style="margin-top:6px">1 Pick concert ✓ · 2 Invite ✓ · 3 Confirm ${S.putri==="In"?"✓":"…"} · 4 Save · 5 War ${S.ticket?"✓":""} · 6 Split · 7 Show day · 8 Album</div></div>
+ <button class="btn" onclick="S.tab='undang';render()">Invite friends</button>`}
+
+function qr(){let h="";for(let i=0;i<144;i++){const r=Math.floor(i/12),c=i%12;const inF=(r<3&&c<3)||(r<3&&c>8)||(r>8&&c<3);const on=inF?!((r===1||r===10)&&(c===1||c===10))||((r===1&&c===1)||(r===1&&c===10)||(r===10&&c===1)):((r*5+c*7+r*c)%3===0);h+=on?"<i></i>":"<b></b>"}return `<div class="qr" role="img" aria-label="Invite QR code">${h}</div>`}
+function tUndang(){return `<div class="sec">Invite friends</div>
+ <div class="card mem">${qr()}<div style="min-width:0"><div class="muted">Invite link</div><b style="font-size:14px;word-break:break-all">barengan.app/j/NEON-7QK</b><div class="muted" style="margin-top:4px">Code: <b>NEON-7QK</b> · valid until Sat 14 Nov</div></div></div>
+ <div class="grid2"><button class="btn" onclick="shareTo('WhatsApp')">Send on WhatsApp</button><button class="btn ghost" onclick="shareTo('Instagram DM')">Instagram DM</button></div>
+ <button class="btn ghost" onclick="copyLink()">Copy link</button>
+ ${S.msg?`<div class="msg">${esc(S.msg)}</div>`:""}<div class="toast">${S.toast}</div>
+ <div class="card"><b>Invite settings</b><div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+  <label class="switch">Admin approval required<input type="checkbox" ${S.approve?"checked":""} onchange="S.approve=this.checked;render()"></label>
+  <div class="muted">${S.approve?"If the link gets forwarded to someone you don’t know, you approve them first.":"Anyone with the link joins straight away."}</div>
+  <div class="row" style="font-size:14px"><span>Max members</span><b>6 people</b></div></div></div>
+ ${S.tiara==="pending"?`<div class="card"><div class="row"><b>Join request</b><span class="chip warn">1 waiting</span></div>
+  <div class="mem" style="margin-top:10px"><div class="av" style="background:#E2DCEF">T</div><div style="flex:1"><b>Tiara</b><div class="muted">Joined via a link Kevin forwarded</div></div></div>
+  <div class="grid2" style="margin-top:10px"><button class="btn sm" onclick="S.tiara='ok';toast('Tiara joined the squad.')">Approve</button><button class="btn ghost sm" onclick="S.tiara='no';toast('Tiara’s request was declined.')">Decline</button></div></div>`:""}
+ <div class="card"><b>Invite from past trips</b><p class="muted" style="margin:4px 0 8px">Friends who’ve been to a concert with you on Barengan.</p>
+ ${Object.keys(S.invited).map(n=>`<div class="row" style="padding:6px 0"><span class="mem"><span class="av" style="background:${n==="Rina"?"#FF9A6F":"#7AD3FF"}">${n[0]}</span><span>${n}<br><span class="muted">Sora & The Waves 2026</span></span></span>${S.invited[n]?`<span class="chip ok">Invited</span>`:`<button class="btn ghost sm" onclick="S.invited['${n}']=true;toast('Invite sent to ${n} in Barengan.')">Invite</button>`}</div>`).join("")}</div>
+ <button class="btn ghost" onclick="S.asFriend=true;S.friendStep=0;S.toast='';render();document.getElementById('body').scrollTop=0">See it as the invited friend →</button>`}
+function shareTo(app){S.msg=`[${app}] Guys! I made a trip for Neon Tide on 13 Mar 2027 🎶 About ${rp(target())} each (ticket + hotel + food). Tell me in or out before Sat 14 Nov:\nbarengan.app/j/NEON-7QK`;toast(`Message ready to send on ${app}.`)}
+function copyLink(){const t="barengan.app/j/NEON-7QK";try{navigator.clipboard.writeText(t).then(()=>toast("Link copied."),()=>toast("Copy it manually: "+t))}catch(e){toast("Copy it manually: "+t)}}
+function vFriend(){const st=S.friendStep;return `<button class="back" onclick="S.asFriend=false;S.toast='';render()">← Back to Nadia’s view</button>
+ <div class="card" style="background:var(--warn-soft);border:0"><b style="color:var(--warn)">Friend’s view</b><div class="muted">Putri opens the link from WhatsApp.</div></div>
+ ${st===0?`<div class="card hero"><div class="m">Nadia invited you to</div><div class="big">Neon Tide – Live in Jakarta</div><div class="m">Sat, 13 Mar 2027 · Stadion Madya</div></div>
+ <div class="card"><b>Estimated cost per person</b>
+  <div class="row muted" style="margin-top:6px"><span>CAT 2 ticket</span><span>${rp(neon().price)}</span></div>
+  <div class="row muted"><span>Hotel (split ${ikut()+1} ways)</span><span>${rp(HOTEL/(ikut()+1))}</span></div>
+  <div class="row muted"><span>Food & transport</span><span>${rp(OTHER)}</span></div>
+  <p class="muted" style="margin:8px 0 0">Squad: Nadia, Kevin, Sasa, Dimas · reply before Sat 14 Nov</p></div>
+  <button class="btn" onclick="S.friendStep=1;S.toast='';render()">I’m in!</button><button class="btn ghost" onclick="toast('You’re a Maybe. Barengan will remind you before the deadline.')">Maybe</button><button class="btn ghost" onclick="toast('Okay, Nadia will know you’re out this time.')">Not this time</button>`:""}
+ ${st===1?`<div class="sec">Sign in to join</div>
+  <button class="btn ghost" onclick="S.friendStep=2;render()">Continue with Google</button>
+  <div><label class="f" for="hp">or phone number</label><input type="text" id="hp" placeholder="08xx xxxx xxxx" inputmode="tel"></div>
+  <button class="btn" onclick="S.friendStep=2;render()">Send OTP code</button>
+  <p class="muted">Just a name and a phone number or email. No bank details.</p>`:""}
+ ${st===2?`<div class="card" style="background:var(--ok-soft);border:0"><b style="color:var(--ok)">You’re in the Neon Tide squad 🎉</b><p class="muted" style="margin:6px 0 0">Next: set your savings target. Friends only see your percentage.</p></div>
+  <button class="btn" onclick="S.putri='In';S.asFriend=false;S.tab='geng';toast('Putri is now In. The split was recalculated.')">Done (back to Nadia)</button>`:""}
+ <div class="toast">${S.toast}</div>`}
+
+function tGeng(){return `<p class="muted" style="margin:0">Friends’ savings show as a percentage only. Amounts stay private.</p>
+ ${people().map(p=>{let st=p.n==="Putri"?S.putri:"In";if(p.n==="Sasa"&&S.sasaState==="replaced")st="Out";const sv=p.n==="Nadia"?pct():p.save;return `<div class="card mem"><div class="av" style="background:${p.c}">${p.n[0]}</div>
+  <div style="flex:1;min-width:0"><div class="row"><b>${p.n}${p.n==="Nadia"?" (you, admin)":""}</b><span class="chip ${st==="In"?"ok":st==="Out"?"bad":"warn"}">${st}</span></div>
+  <div class="muted">${sv==null?"No target yet":"Saved "+sv+"%"} · ${S.ticket&&st==="In"?"Ticket ✓":"No ticket yet"}</div></div></div>`}).join("")}
+ ${S.tiara==="ok"?`<div class="card mem"><div class="av" style="background:#E2DCEF">T</div><div style="flex:1"><div class="row"><b>Tiara</b><span class="chip warn">Maybe</span></div><div class="muted">Approved by admin</div></div></div>`:""}
+ ${S.putri==="Maybe"?`<div class="card"><b>Putri isn’t sure yet</b><p class="muted" style="margin:6px 0 10px">Deadline Sat 14 Nov. Barengan sends the reminder, not you.</p>
+  <button class="btn" onclick="S.msg='Hi Putri! 👋 A reminder from Barengan.\\nThe Neon Tide squad is waiting for you: in or out? Deadline is Sat 14 Nov so we can lock the war plan and hotel.\\nbarengan.app/j/NEON-7QK';toast('Reminder sent in Barengan’s name.')">Send a reminder from Barengan</button></div>`:""}
+ ${S.msg?`<div class="msg">${esc(S.msg)}</div>`:""}<div class="toast">${S.toast}</div>`}
+
+function tWar(){const items=["Account verified","Log in 30 minutes before 12:00","Payment method ready, enough balance","One device per account"];return `
+ <div class="card hero"><div class="m">Ticket war</div><div class="big">${neon().war}</div><span class="count">${S.ticket?"Done: got them!":"In 4 days"}</span></div>
+ <div class="card" style="background:var(--warn-soft);border:0"><b style="color:var(--warn)">Squad rule: pay first, then we buy</b><div class="muted">Tickets are only bought for members who already paid their ticket share. This prevents the worst case: a ticket is bought and the friend never pays.</div></div>
+ <div class="sec">Who wars where</div>
+ ${people().filter(p=>p.acc!=="—").map(p=>`<div class="card mem"><div class="av" style="background:${p.c}">${p.n[0]}</div><div style="flex:1"><b>${p.n}</b><div class="muted">${p.acc}</div></div></div>`).join("")}
+ <div class="card"><b>Your checklist</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+  ${items.map((t,i)=>`<label class="chk"><input type="checkbox" ${S.checks[i]?"checked":""} onchange="S.checks[${i}]=this.checked;render()">${t}</label>`).join("")}</div></div>
+ <div class="card"><b>Backup plan</b><p class="muted" style="margin:6px 0 0">CAT 2 sold out → CAT 3 (Rp1,250,000). Whoever gets in first buys for everyone who paid (check the per-account limit), then the rest stop.</p></div>
+ ${S.ticket?`<div class="card" style="background:var(--ok-soft);border:0"><b style="color:var(--ok)">Nadia got CAT 2 tickets! Everyone, stop.</b></div>`:`<button class="btn" onclick="S.ticket=true;toast('“Stop the war” alert sent to the squad.')">I got the tickets!</button>`}
+ <div class="toast">${S.toast}</div>`}
+
+function tHari(){const items=["E-ticket / wristband redeemed","ID card","Fully charged power bank","Light raincoat","Small cash"];return `
+ <div class="card hero"><div class="m">Show day</div><div class="big">Sat, 13 Mar 2027</div><div class="m">Meet 16:00 at Gate 5 · Head home together 23:00</div></div>
+ <div class="card"><b>What to bring</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+ ${items.map((t,i)=>`<label class="chk"><input type="checkbox" ${S.hari[i]?"checked":""} onchange="S.hari[${i}]=this.checked;render()">${t}</label>`).join("")}</div></div>
+ <button class="btn" onclick="go('album')">Concert over? Open the memory album</button>`}
+
+/* ---------- SAVE ---------- */
+function vNabung(){const t=target(),c=neon();return `<div class="sec">Your savings target</div>
+ <div class="card"><div class="row"><span class="muted">Saved</span><b class="money">${rp(S.saved)}</b></div>
+ <div class="bar" style="margin:10px 0"><div style="width:${pct()}%"></div></div>
+ <div class="row"><span class="muted">${pct()}% of target</span><b class="money">${rp(t)}</b></div></div>
+ <div class="card"><b>Target breakdown</b>
+ <div class="row muted" style="margin-top:8px"><span>CAT 2 ticket <span class="chip ok">Official</span></span><span class="money">${rp(c.price)}</span></div>
+ <div class="row muted"><span>Hotel (${rp(HOTEL)} ÷ ${ikut()})</span><span class="money">${rp(share())}</span></div>
+ <div class="row muted"><span>Food & transport</span><span class="money">${rp(OTHER)}</span></div></div>
+ <div class="card"><b>Ticket price history</b><div class="log" style="margin-top:10px">${c.log.map(l=>`<div><b style="font-size:13px">${l[0]}</b><div style="font-size:14px">${l[1]}</div><div class="muted">${l[2]}</div></div>`).join("")}</div>
+ <p class="muted" style="margin:10px 0 0">Before the price is out, the target uses an estimate from similar concerts. When the official price lands, everyone’s target updates automatically and the change is logged here.</p></div>
+ <div class="card"><b>${S.saved>=c.price?"Ticket money sorted 🎉":"Before the ticket war"}</b><p class="muted" style="margin:6px 0 0">${S.saved>=c.price?"The rest can wait until show day.":"You need "+rp(c.price-S.saved)+" more by "+c.war+"."}</p></div>
+ <button class="btn" onclick="S.saved+=100000;toast('Logged +Rp100,000. Friends only see your percentage.')">Log savings +Rp100,000</button>
+ <div class="toast">${S.toast}</div><p class="muted">Barengan only records. Your money stays in your own bank or e-wallet.</p>`}
+
+/* ---------- SPLIT ---------- */
+function sasaTimeline(){const st=[[0,"20 Nov","Hotel bill created, Sasa notified"],[1,"21 Nov","Automatic reminder 1 from Barengan"],[3,"23 Nov","Reminder 2 + “ask for more time” button"],[7,"27 Nov","Marked Late. The admin gets options"]];
+ return `<div class="log">${st.map(s=>`<div style="opacity:${S.days>=s[0]?1:.45}"><b style="font-size:13px">Day ${s[0]} · ${s[1]}</b><div class="muted">${s[2]}</div></div>`).join("")}</div>`}
+function sasaCard(sh){
+ if(S.sasaState==="replaced")return `<div class="card row"><div><b>Sasa</b><div class="muted">Out; Rina took her spot at the same price</div></div><span class="chip bad">Out</span></div>`;
+ if(S.sasaState==="writeoff")return `<div class="card row"><div><b>Sasa</b><div class="muted">Written off by Nadia · reminders stopped</div></div><span class="chip">Written off</span></div>`;
+ if(S.paid.Sasa)return `<div class="card row"><div><b>Sasa</b><div class="muted money">${rp(sh)}</div></div><span class="chip ok">Paid ✓</span></div>`;
+ const late=S.days>=7,rest=sh-(S.partial.Sasa||0);
+ return `<div class="card"><div class="row"><div><b>Sasa</b><div class="muted money">${rp(sh)}${S.partial.Sasa?` · paid ${rp(S.partial.Sasa)}, ${rp(rest)} left`:""}</div></div><span class="chip ${late&&S.sasaState!=="extended"?"bad":"warn"}">${S.sasaState==="extended"?"Due 30 Nov":late?S.days+" days late":"Unpaid"}</span></div>
+ <div style="margin-top:12px">${sasaTimeline()}</div>
+ ${S.days<7?`<button class="btn ghost sm" style="margin-top:10px" onclick="S.days=7;toast('Simulated: 7 days with no payment.')">Simulate: 7 days pass</button>`:`<div style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><b style="font-size:14px">Choose an action (only the admin sees this)</b>
+  <button class="btn ghost" onclick="lastCall()">1 · Final reminder + 3-day deadline</button>
+  <button class="btn ghost" onclick="S.partial.Sasa=200000;toast('Logged a partial payment of Rp200,000.')">2 · Log a partial payment</button>
+  <button class="btn ghost" onclick="S.sasaState='replaced';S.rina=true;toast('Sasa’s spot offered to Rina (backup). The split was recalculated.')">3 · Offer the spot to a backup friend (Rina)</button>
+  <button class="btn ghost" onclick="S.sasaState='writeoff';toast('Written off. Logged in history, reminders stopped.')">4 · Let it go and stop reminders</button>
+  <button class="btn sm" onclick="S.paid.Sasa=true;toast('Sasa finally paid.')">Sasa paid → mark as paid</button></div>`}</div>`}
+function lastCall(){S.sasaState="extended";S.msg=`Hi Sasa, a final reminder from Barengan 🙏\nYour hotel share of ${rp(share())} for Neon Tide isn’t marked as paid yet. New deadline: 30 Nov. If something came up, tap “ask for more time” or “drop out” at barengan.app/g/neontide.`;toast("Final reminder + 3-day deadline sent.")}
+function vPatungan(){const sh=share();const names=ikutNames().filter(n=>n!=="Nadia");const done=n=>S.paid[n]||(n==="Sasa"&&S.sasaState==="writeoff");const lunas=names.filter(done).length;
+ const others=names.filter(n=>n!=="Sasa").map(n=>`<div class="card row"><div><b>${n}</b><div class="muted money">${rp(sh)}</div></div>${S.paid[n]?`<span class="chip ok">Paid ✓</span>`:`<div style="display:flex;gap:6px"><button class="btn ghost sm" onclick="remind('${n}')">Remind</button><button class="btn sm" onclick="S.paid['${n}']=true;toast('${n} marked as paid.')">Paid</button></div>`}</div>`).join("");
+ return `<div class="sec">Hotel split</div>
+ <div class="card"><div class="row"><b>2 rooms, 12–13 Mar</b><b class="money">${rp(HOTEL)}</b></div>
+ <div class="muted">Paid by Nadia · split ${ikut()} ways = <b>${rp(sh)}</b> each</div>
+ <div class="row" style="margin-top:8px"><span class="muted">${lunas} of ${names.length} settled</span><span class="chip ${lunas===names.length?"ok":"warn"}">${lunas===names.length?"All settled":"Not yet"}</span></div></div>
+ ${sasaCard(sh)}${others}
+ ${S.msg?`<div class="msg">${esc(S.msg)}</div>`:""}<div class="toast">${S.toast}</div>
+ <div class="card"><b>If someone still won’t pay</b><p class="muted" style="margin:6px 0 0">Before the show: their spot can go to a backup friend at the same price, never marked up. After the show: the debt stays logged, with weekly reminders for up to 4 weeks, then the admin can let it go. Barengan never holds money or shares debts outside the squad.</p></div>`}
+function remind(n){S.msg=`Hi ${n}! 👋 A reminder from Barengan.\nYour hotel share for Neon Tide (${rp(share())}) isn’t marked as paid yet. Transfer it to Nadia, then tap “Paid” at barengan.app/g/neontide.`;toast("Reminder sent in Barengan’s name, not Nadia’s.")}
+
+/* ---------- ALBUM ---------- */
+const TILES=["#FF6FAE","#7AD3FF","#C6F45B","#B9A2FF","#FFB547","#FF9A6F","#7AD3FF","#FF6FAE","#B9A2FF"];
+function vAlbum(){const n=48+S.photos.length;return `<div class="card hero"><div class="m">Memory album</div><div class="big">Neon Tide · 13 Mar 2027</div><div class="m">${n} photos · 6 videos · from ${ikut()} members</div></div>
+ <div class="tiles">${S.photos.slice(-3).reverse().map(f=>`<div class="tile" style="background:linear-gradient(135deg,#C6F45B,#2A2150);font-size:9px;word-break:break-all">${esc(f)}</div>`).join("")}${TILES.map((c,i)=>`<div class="tile" style="background:linear-gradient(135deg,${c},#2A2150)">${i===2||i===6?"▶ 0:"+(20+i):""}</div>`).join("")}</div>
+ <div><div class="row"><span class="muted">Squad storage</span><span class="muted">1.2 GB of 5 GB</span></div><div class="bar" style="margin-top:6px"><div style="width:24%"></div></div></div>
+ <label class="btn" style="cursor:pointer">Upload photos & videos<input type="file" accept="image/*,video/*" multiple hidden onchange="addFiles(this.files)"></label>
+ <div class="card"><b>Already have an album in iCloud or Google Photos?</b><p class="muted" style="margin:4px 0 8px">Paste the shared album link (iCloud Shared Album or Google Photos) so every memory sits in one place.</p>
+ <input type="url" id="lnk" aria-label="Album link" placeholder="https://www.icloud.com/sharedalbum/..." value="${esc(S.linked)}">
+ <button class="btn ghost sm" style="margin-top:8px" onclick="S.linked=document.getElementById('lnk').value;toast(S.linked?'Album linked to this trip.':'Paste the link first.')">Link album</button></div>
+ <div class="card"><b>Share the memories</b><div class="seg" style="margin-top:8px"><button class="${S.shareMode==="geng"?"on":""}" onclick="S.shareMode='geng';render()">Squad only</button><button class="${S.shareMode==="link"?"on":""}" onclick="S.shareMode='link';render()">Anyone with the link</button></div>
+ <p class="muted" style="margin:8px 0">${S.shareMode==="geng"?"Only squad members can view, upload and download.":"Others can only view, not upload. The link turns off after 30 days."}</p>
+ <button class="btn" onclick="S.msg='Our Neon Tide memories 🎶✨ ${n} photos + 6 videos:\\nbarengan.app/a/neontide-27';toast('Memory link ready to share.')">Create memory link</button></div>
+ ${S.msg?`<div class="msg">${esc(S.msg)}</div>`:""}<div class="toast">${S.toast}</div>
+ <div class="card"><b>How clear is this prototype?</b><div class="stars" style="margin-top:6px">${[1,2,3,4,5].map(i=>`<button class="${i<=S.rating?"on":""}" onclick="S.rating=${i};render()" aria-label="${i} stars">★</button>`).join("")}</div>
+ ${S.joined?`<p class="toast" style="margin:8px 0 0">Thanks! You’re on the waitlist.</p>`:`<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px"><input type="email" id="em" aria-label="Email" placeholder="Email (for the waitlist)"><button class="btn" onclick="join()">Join the waitlist</button><div class="toast" id="er" style="color:var(--bad)"></div></div>`}
+ <p class="muted" style="margin:8px 0 0">Demo only: nothing you type here is stored.</p></div>`}
+function addFiles(fl){for(const f of fl)S.photos.push(f.name);toast(fl.length+" file(s) added to the album (prototype: not actually stored).")}
+function join(){const v=document.getElementById("em").value;if(!/^\S+@\S+\.\S+$/.test(v)){document.getElementById("er").textContent="Please enter a valid email.";return}S.joined=true;render()}
+
+/* ---------- RENDER ---------- */
+const NAV=[["jelajah","♫","Explore"],["trip","★","Trip"],["nabung","◎","Save"],["patungan","⇄","Split"],["album","▣","Album"]];
+function render(){
+ const map={jelajah:vJelajah,trip:vTrip,nabung:vNabung,patungan:vPatungan,album:vAlbum};
+ document.getElementById("body").innerHTML=map[S.view]();
+ document.getElementById("who").innerHTML=S.asFriend&&S.view==="trip"?"Via link<br><b>Putri</b>":"Signed in<br><b>Nadia</b>";
+ document.getElementById("nav").innerHTML=NAV.map(([k,i,l])=>`<button class="${k===S.view?"on":""}" onclick="go('${k}')"><i>${i}</i>${l}</button>`).join("");
+}
+render();
+</script>
