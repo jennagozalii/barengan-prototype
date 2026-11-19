@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph P1[1 · Plan]
+    direction TB
+    A([Organiser opens Barengan]):::start --> B{Concert on the list?}
+    B -- Yes --> C[Pick concert]
+    B -- No --> D[Manual trip<br/>name · city · date · price]
+    C --> E[Create trip]
+    D --> E
+  end
+  subgraph P2[2 · Gather the squad]
+    direction TB
+    F[Share invite link<br/>WhatsApp · IG · QR] --> G{All confirmed<br/>by deadline?}
+    G -- No --> H[Barengan sends reminder]
+    H --> G
+    G -- Yes --> I[Private savings targets<br/>estimate → official price]
+  end
+  subgraph P3[3 · Get tickets]
+    direction TB
+    J[War plan: accounts + checklist] --> K{Got tickets?}
+    K -- No --> L[Backup category]
+    L --> K
+    K -- Yes --> M[Stop-war alert<br/>bought only for those who paid]
+  end
+  subgraph P4[4 · Pay, go, remember]
+    direction TB
+    N[Organiser adds hotel cost] --> O[Split + reminders<br/>unpaid steps if needed]
+    O --> Q[Show day checklist]
+    Q --> R[Album + memory link]:::fin
+  end
+  E --> F
+  I --> J
+  M --> N
+  classDef start fill:#C6F45B,stroke:#14111F
+  classDef fin fill:#14111F,color:#F3EEFF,stroke:#14111F

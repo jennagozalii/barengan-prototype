@@ -1,0 +1,12 @@
+flowchart LR
+  A([Visitor from LinkedIn / IG / WhatsApp]):::start --> B[Landing page<br/>Vercel]
+  B -- page_view --> S[(Google Sheets<br/>Events tab)]
+  B --> C{Action}
+  C -- Try the prototype --> P[Clickable prototype]
+  C -- click --> S
+  C -- Join the waitlist --> F[Waitlist form<br/>7 questions]
+  F -- validate --> G[Apps Script Web App]
+  G --> T[(Google Sheets<br/>Signups tab)]
+  T --> M[Success metrics<br/>sign-up rate · organiser share · would pay]:::fin
+  classDef start fill:#C6F45B,stroke:#14111F
+  classDef fin fill:#14111F,color:#F3EEFF,stroke:#14111F

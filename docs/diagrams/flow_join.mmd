@@ -1,0 +1,17 @@
+flowchart LR
+  A([Friend taps invite link]):::start --> B[Trip preview<br/>concert · cost per person · who's in]
+  B --> C{Choice}
+  C -- Not this time --> X[Organiser notified]:::fin
+  C -- Maybe --> M[Status Maybe<br/>reminder before deadline]
+  M --> C
+  C -- I'm in --> D{Has account?}
+  D -- No --> E[Sign in: Google or phone OTP<br/>name + contact only]
+  D -- Yes --> F
+  E --> F{Link forwarded by<br/>someone else & approval on?}
+  F -- Yes --> G[Admin approves / declines]
+  G -- Declined --> Y[Request closed]:::fin
+  G -- Approved --> H
+  F -- No --> H[Joins squad]
+  H --> I[Sets savings target<br/>friends see % only]:::fin
+  classDef start fill:#C6F45B,stroke:#14111F
+  classDef fin fill:#14111F,color:#F3EEFF,stroke:#14111F

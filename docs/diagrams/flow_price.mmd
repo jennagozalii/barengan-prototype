@@ -1,0 +1,15 @@
+flowchart LR
+  subgraph S1[Before the price is out]
+    direction TB
+    A([Concert announced, no price]):::start --> B[Team sets estimate range<br/>avg of 3 similar concerts at venue]
+    B --> C[Targets use the midpoint<br/>labelled Estimate]
+  end
+  subgraph S2[When the price is announced]
+    direction TB
+    E[Team updates list within 48h<br/>or organiser edits manual trip] --> F[Log: date · old → new · source · who]
+    F --> G[All linked targets recalculate]
+    G --> H[Members notified with<br/>new amount needed]:::fin
+  end
+  C -- official price announced --> E
+  classDef start fill:#C6F45B,stroke:#14111F
+  classDef fin fill:#14111F,color:#F3EEFF,stroke:#14111F

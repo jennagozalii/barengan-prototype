@@ -1,0 +1,31 @@
+flowchart LR
+  subgraph A1[Day 0 – 3 · automatic]
+    direction TB
+    A([Bill created · Day 0]):::start --> B[Day 1: reminder from Barengan]
+    B --> C[Day 3: reminder 2<br/>+ ask for more time / drop out]
+  end
+  subgraph A2[Day 7 · admin decides]
+    direction TB
+    F[Status: Late<br/>only admin sees options] --> G1[Final reminder<br/>+ 3-day deadline]
+    F --> G2[Log partial payment]
+    F --> G3[Offer spot to backup friend<br/>same price]
+    F --> G4[Let it go]
+  end
+  subgraph A3[Outcome]
+    direction TB
+    Z[Paid ✓]:::fin
+    R[Split recalculated<br/>backup friend joins]:::fin
+    W[Written off · reminders stop]:::fin
+    H[After the concert: debt stays logged<br/>weekly reminder up to 4 weeks]
+  end
+  C -- still unpaid --> F
+  C -- pays --> Z
+  C -- drops out --> R
+  G1 --> Z
+  G2 --> Z
+  G3 --> R
+  G4 --> W
+  G1 -. no payment and concert passed .-> H
+  H --> W
+  classDef start fill:#C6F45B,stroke:#14111F
+  classDef fin fill:#14111F,color:#F3EEFF,stroke:#14111F
