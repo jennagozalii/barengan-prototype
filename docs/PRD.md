@@ -54,7 +54,7 @@ Key pain points from the Part 2 synthesis:
 | 10 | Show-day meeting point + checklist | ⏳ Later | Nice, not core to validation |
 | 11 | WhatsApp bot instead of an app | ❌ | WA API cost/limits; no structured screens |
 | 12 | Auto-buy bot for the ticket war | ❌ | Breaks ticketing T&C, unfair, legal risk |
-| 13 | Barengan holds the money (escrow / installments) | ❌ | Needs OJK licence; too risky for MVP |
+| 13 | Barengan holds the money (escrow / installments) | ❌ | Needs a Bank Indonesia or OJK licence; too risky for MVP |
 | 14 | Match with strangers to fill a squad | ❌ | Safety and trust issues; different product |
 | 15 | Merch group order | ⏳ Later | Different job, extra logistics |
 | 16 | Carpool / hotel booking inside the app | ⏳ Later | Partnerships needed; link out instead |
